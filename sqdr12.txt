@@ -1,0 +1,31 @@
+                          Upload Information Template for Hobbes.nmsu.edu
+                          ===============================================
+
+        Archive Filename: sqdr12.zip
+       Short Description: redirector for squid 
+
+        Long Description: redirector for squid SQDR v0.12:
+                          no regexp, fast and easy, re-read
+                          rules online, allow to look at user's
+                          queries online, freeware & opensource 
+
+      Proposed directory
+           for placement: /pub/os2/apps/internet/www/server
+
+               Your name: Evgeny Kotsuba 
+           Email address: evgen[at]laser.ru
+    Program contact name: (same)
+   Program contact email: (same)
+             Program URL: http://www.laser.ru/evgen/soft/SQDR
+
+      Would you like the
+   contact email address
+    included in listings? no
+
+Operating System/Version: OS/2 Warp etc.
+ Additional requirements: squid 2.4s3 or squid2 2.5
+
+                Replaces: /pub/os2/apps/internet/www/server/sqdr09.zip
+
+
+

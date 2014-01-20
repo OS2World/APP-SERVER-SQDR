@@ -1,0 +1,119 @@
+SQDR - redirector for squid - v.0.12
+tested with  "Squid 2.4 STABLE 2 for OS/2" by A. Leko
+as well as Squid2 2.5 by Evgen
+
+for  "Squid 2.3 STABLE 4 for OS/2 Release 20/07/2000" by Stauff
+you should use  sqdr10a 
+
+Setup:
+-----
+Copy files target.exe and sqdrserver.exe to [squid] directory,
+Copy  to [squid]\SQDR directory
+   redir.rules (main file with rules),  
+   blacklist.upd (for your rules for pornosites),
+   domain (blacklist of pornodomains)
+
+[squid]\SQDR is also the directory for sqdr's log files.
+don't foget to create directory SQDR\Clients for  clients logs.
+
+Look at SQDR\redir.rules and change BaseRedirUrl to your own
+
+BaseRedirUrl=http://your.local.www
+DefaultRedir=images/dot.gif
+
+Write in squid.conf something  like
+  redirect_program  target.exe
+  redirect_children 5
+
+Fire squid via squid.cmd like
+
+@setlocal
+set SQUID_DIRECTORY=M:\SQ
+start "SQDR" /B /C %SQUID_DIRECTORY%\sqdrserver.exe
+REM DosSleep 10
+%SQUID_DIRECTORY%\bin\squid -D -s %1 %2 %3 %4 %5 %6 %7 %8 %9
+@endlocal
+
+If you prefer run squid in detach mode, then you don't need to  start 
+sqdrserver.exe in separate session. Nevertheless I recommend you first
+time to run all stuff in non detach mode.
+
+Please change redir.rules and and you will hear beep from sqdrserver.
+
+Redir.rules 
+-----------
+
+Commets are start with #
+
+rules are very simple:
+[*]url[$] [[http://]redirUrl]
+
+For example,
+ad.doubleclick.net/ad 
+- redirect to DefaultRedir all starting with  
+                   ad.doubleclick.net/ad or 
+             ad[1-99].doubleclick.net/ad 
+          www[1-9].ad.doubleclick.net/ad
+            level1.ad.doubleclick.net/ad
+   www[1-9].level1.ad.doubleclick.net/ad
+  [1-9] stand for any character from "1" to "9", or "",
+  level1 stand for any subdomain 
+
+*.lbe.ru/bb.cgi
+- redirect to DefaultRedir all containing .lbe.ru/bb.cgi
+
+!agt.net
+ - abort rule for agt.net and level1.agt.net 
+
+
+.mpeg$ images/PAPER1.JPG
+  - redirect to BaseRedirUrl/images/PAPER1.JPG all that end with .mpg
+
+Check for rules  unique. 
+--------------------------------
+
+sqdrserver.exe -r 
+
+Write back redir.rules,  domain and blacklist.upd .
+
+
+Setup for autoblock of pornosites
+------------------------------------------------------------
+
+#max pornohits per Hour for  Wait pause 
+MaxHitsPerHourBlack_List=20  
+  -  How much hits per hour user can do without blocking
+     (by accident or by links/banners)
+
+Wait_minBlack_List=1
+  - How long (in minutes) user will be bloked
+WaitUrlBlack_List=images/porno_stop.gif
+  - What user will see at any url when blocked (a set of pictures
+    you can find at apache\htdocs\images
+
+-----------------------------------------------
+----------
+blacklist in file /SQDR/domain you can find at 
+ftp://ftp.ost.eltele.no/pub/www/proxy/squidGuard/contrib/blacklists.tar.gz
+or from program ftp 
+---------
+Last changes you can find at 
+http://www.laser.ru/evgen/soft/SQDR
+see also
+http://www.laser.ru/evgen/soft/Squid2
+
+---------
+---------
+
+For running sqdrserver.exe at any computer of local net
+-------------------------------------------------------
+you must to create file
+
+SQDR/client.cfg
+
+with local compuer's name (use net who to find computer name)
+
+
+---------
+-----------------------------------------------
+Your comments send to evgen@laser.ru
